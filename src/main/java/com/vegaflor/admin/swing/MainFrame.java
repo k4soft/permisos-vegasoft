@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
         t.addTab("Aplicaciones (Sec)", new PanelAplicaciones());
         t.addTab("Roles / Permisos",   new PanelRolPermiso());
         t.addTab("Permisos",           new PanelPermisos());
+        t.addTab("Ingrepro",           new PanelIngresoProduccion());
         return t;
     }
 

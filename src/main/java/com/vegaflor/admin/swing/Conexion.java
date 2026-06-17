@@ -32,11 +32,20 @@ public class Conexion {
     public static String getUrl()           { return props.getProperty(entorno + ".url", ""); }
 
     public static Connection get() throws SQLException {
-        String url  = JasyptUtil.decrypt(props.getProperty(entorno + ".url"));
-        String user = JasyptUtil.decrypt(props.getProperty(entorno + ".user"));
-        String pass = JasyptUtil.decrypt(props.getProperty(entorno + ".password"));
+        return get(entorno);
+    }
+
+    /**
+     * Conexión a un entorno específico, sin alterar el entorno global seleccionado.
+     * Útil para funcionalidades que siempre deben apuntar al mismo entorno
+     * (p. ej. consultas que siempre van a producción).
+     */
+    public static Connection get(String env) throws SQLException {
+        String url  = JasyptUtil.decrypt(props.getProperty(env + ".url"));
+        String user = JasyptUtil.decrypt(props.getProperty(env + ".user"));
+        String pass = JasyptUtil.decrypt(props.getProperty(env + ".password"));
         if (url == null || url.isBlank())
-            throw new SQLException("No hay configuración para el entorno: " + entorno);
+            throw new SQLException("No hay configuración para el entorno: " + env);
         return DriverManager.getConnection(url, user, pass);
     }
 }
